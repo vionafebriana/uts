@@ -1,0 +1,74 @@
+---
+title: "UTS DMKM"
+author: "Viona Febriana-221810647-3SI1"
+date: "10/27/2020"
+output: word_document
+---
+
+## Load Library
+Library class akan digunakan untuk membuat model knn dan library caret digunakan untuk membuat confusion matriks dan melihar akurasi model.
+```{r}
+library(class)
+library(caret)
+```
+
+
+## Import dataset
+```{r}
+flag <- read.csv("C:/Users/Viona Febriana/Downloads/flag.data", header=FALSE)
+View(flag)
+```
+
+## Explorasi Data
+melihat variabel yang ada
+```{r}
+str(flag)
+```
+\
+ubah tipe variabel menjadi faktor dan numeric
+```{r}
+for(i in names(flag)){
+  flag[,i]= as.factor(flag[,i])
+}
+
+#ubah tipe variabel yang numeric
+flag$V4 <-as.numeric(flag$V4)
+flag$V5 <-as.numeric(flag$V5)
+flag$V8 <-as.numeric(flag$V8)
+flag$V9 <-as.numeric(flag$V9)
+flag$V10 <-as.numeric(flag$V10)
+flag$V19 <-as.numeric(flag$V19)
+flag$V20 <-as.numeric(flag$V20)
+flag$V21 <-as.numeric(flag$V21)
+flag$V22 <-as.numeric(flag$V22)
+flag$V23 <-as.numeric(flag$V23)
+#untuk memastikan, dilihat struktur datanya
+str(flag)
+```
+
+## Split Data
+memecah data menjadi data training(80% dari data awal) dan data test (20% dari data awal)
+```{r}
+set.seed(123)
+sampel <- sample(2,nrow(flag),replace = T, prob = c(0.8,0.2))
+trainingdat <- flag[sampel==1, ]
+testingdat<- flag[sampel==2, ]
+print(paste("Jumlah Train Data: ", nrow(trainingdat), "| Jumlah Test Data: ", nrow(testingdat)))
+head(trainingdat)
+
+# set data yang numerik saja
+trainingdatnum <- trainingdat[, sapply(trainingdat, is.numeric)]
+testingdatnum <- testingdat[, sapply(testingdat, is.numeric)]
+print(paste("Jumlah Train Data: ", nrow(trainingdatnum), "| Jumlah Test Data: ", nrow(testingdatnum)))
+```
+
+## Model
+```{r}
+#prediksi <- knn(train = trainingdatnum, test = testingdatnum, cl=trainingdatnum$V7 ,k=20)
+```
+
+## confusion matrix
+```{r}
+#confusionMatrix(table(prediksi, testingdatnum$V7))
+```
+
